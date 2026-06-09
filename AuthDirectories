@@ -9,6 +9,7 @@ Auth/
             LastName.php
             Email.php
             Password.php
+            RawPassword.php
             TokenId.php
             TokenValue.php
             TokenType.php
