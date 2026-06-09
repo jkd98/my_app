@@ -10,3 +10,7 @@ composer init
 composer dump-autoload
 ```
 
+***Este comando instala ramsey/uuid***
+```bash
+composer require ramsey/uuid
+```

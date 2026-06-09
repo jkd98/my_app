@@ -11,5 +11,7 @@
             "name": "JK"
         }
     ],
-    "require": {}
+    "require": {
+        "ramsey/uuid": "^4.9"
+    }
 }
