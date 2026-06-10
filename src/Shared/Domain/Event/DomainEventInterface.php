@@ -4,7 +4,7 @@ namespace App\Shared\Domain\Event;
 use DateTimeImmutable;
 
 
-Interface DomainEventInterface {
+interface DomainEventInterface {
     public function eventId():string;
     public function occurredAt():DateTimeImmutable;
 }
