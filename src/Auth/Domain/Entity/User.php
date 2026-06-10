@@ -7,6 +7,8 @@ use App\Auth\Domain\ValueObject\UserName;
 use App\Auth\Domain\ValueObject\LastName;
 use App\Auth\Domain\ValueObject\Email;
 use App\Auth\Domain\ValueObject\Password;
+use DateTimeImmutable;
+use App\Auth\Domain\Events\UserRegistered;
 
 
 final class User {
@@ -44,7 +46,7 @@ final class User {
             $now,
             $now,
        );
-       $this->domainEvents[] = new UserRegistered();
+       $nwUser->domainEvents[] = UserRegistered::create($nwUser->email,$nwUser->userName);
        return $nwUser;
     }
 
@@ -55,10 +57,10 @@ final class User {
         LastName $lastName,
         Email $email,
         Password $pass,
-        bool $isVerified = false,
+        bool $isVerified,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
-    ) {
+    ) : self {
         return new self(
             $userId,
             $userName,
@@ -72,6 +74,8 @@ final class User {
     }
 
     public function pullDomainEvents(){
-        return $this->domainEvents;
+        $events = $this->domainEvents;
+        $this->domainEvents = [];
+        return $events;
     }
 }
