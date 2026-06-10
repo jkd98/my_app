@@ -15,13 +15,13 @@ final class User {
 
     private function __construct(
         private readonly UserId $userId,
-        private readonly UserName $userName,
-        private readonly LastName $lastName,
+        private UserName $userName,
+        private LastName $lastName,
         private readonly Email $email,
-        private readonly Password $pass,
-        private readonly bool $isVerified,
+        private Password $pass,
+        private bool $isVerified,
         private readonly DateTimeImmutable $createdAt,
-        private readonly DateTimeImmutable $updatedAt,
+        private DateTimeImmutable $updatedAt,
         private array $domainEvents = []
     ) {
         
@@ -33,7 +33,6 @@ final class User {
         LastName $lastName,
         Email $email,
         Password $pass,
-        bool $isVerified = false,
     ) : self {
         $now = new DateTimeImmutable();
         $nwUser = new self(
@@ -42,15 +41,15 @@ final class User {
             $lastName,
             $email,
             $pass,
-            $isVerified,
+            false,
             $now,
             $now,
        );
-       $nwUser->domainEvents[] = UserRegistered::create($nwUser->email,$nwUser->userName);
+       $nwUser->domainEvents[] = UserRegistered::create($nwUser->userId(), $nwUser->email(),$nwUser->userName());
        return $nwUser;
     }
 
-    public static function reconstruite
+    public static function reconstitute
     (
         UserId $userId,
         UserName $userName,
@@ -73,9 +72,43 @@ final class User {
        );
     }
 
-    public function pullDomainEvents(){
+    public function pullDomainEvents() : array {
         $events = $this->domainEvents;
         $this->domainEvents = [];
         return $events;
     }
+
+    public function confirmAccount() : void {
+        $this->isVerified = true;
+        $this->userUpdatedAt();
+    }
+
+    public function changePassword(Password $nwPass) : void {
+        $this->pass = $nwPass;
+        $this->userUpdatedAt();
+    }
+
+    public function correctUserName(UserName $nwUserName) : void {
+        $this->userName = $nwUserName;
+        $this->userUpdatedAt();
+    }
+
+    public function correctLastNames(LastName $nwLastName) : void {
+        $this->lastName = $nwLastName;
+        $this->userUpdatedAt();
+    }
+
+    private function userUpdatedAt() : void {
+        $now =  new DateTimeImmutable();
+        $this->updatedAt = $now;
+    }
+
+    public function userId() : UserId { return $this->userId; }
+    public function userName(): UserName { return $this->userName; }
+    public function lastName() : LastName { return $this->lastName; }
+    public function email() : Email { return $this->email; }
+    public function password() : Password { return $this->pass; }
+    public function isVerified() : bool { return $this->isVerified; }
+    public function createdAt() : DateTimeImmutable { return $this->createdAt; }
+    public function updatedAt(): DateTimeImmutable { return $this->updatedAt; }
 }
