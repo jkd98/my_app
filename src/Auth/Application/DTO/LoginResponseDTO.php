@@ -4,6 +4,10 @@ namespace App\Auth\Application\DTO;
 
 
 final class LoginResponseDTO {
-    public function __construct(private readonly string $token){}
-    public function token() : string { return $this->token; }
+    public function __construct(
+        private readonly string $accessToken, 
+        private readonly string $refreshToken
+    ){}
+    public function accessToken() : string { return $this->accessToken; }
+    public function refreshToken() : string { return $this->refreshToken; }
 }
