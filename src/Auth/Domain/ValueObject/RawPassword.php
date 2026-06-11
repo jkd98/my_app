@@ -14,6 +14,10 @@ final class RawPassword {
         return strlen($passTxt) < 8 ? throw new InvalidArgumentException("La longitud de la contraseña debe ser mayor o igual a 8 caracteres") : new self($passTxt);
     }
 
+    public static function fromString(string $pass): self {
+        return new self($pass);
+    }
+
     public function value() : string {
         return $this->rawPass;
     }
