@@ -16,6 +16,14 @@ final class TokenExpiration {
         return new self($expiration);
     }
 
+    public static function fromString(string $strDateTime) : self {
+        try {
+            return new self(new DateTimeImmutable($strDateTime));
+        } catch (\Exception $e) {
+            throw new InvalidArgumentException("La fecha de la base de datos es inválida: " . $strDateTime);
+        }
+    }
+
     public function isExpired() : bool {
         $now = new DateTimeImmutable();
         return $now>$this->value();
