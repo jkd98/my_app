@@ -49,6 +49,16 @@ final class Login {
             throw $th;
         }
         
+        if( $this->passwordHash->needsRehash($userExist->password()) ){
+            $nwHash = $this->passwordHash->hash(RawPassword::fromString($data->rawPassword()));
+            $userExist->changePassword($nwHash);
+            try {
+                $this->userRepository->save($userExist);
+            } catch (\Throwable $th) {
+                error_log(json_encode($th));
+            }
+        };
+
         // Retornar el DTO
         return new LoginResponseDTO($accessToken,$refreshToken->tokenValue()->value());
     }
