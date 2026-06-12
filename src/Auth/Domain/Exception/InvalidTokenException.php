@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth\Application\Exception;
+namespace App\Auth\Domain\Exception;
 use Exception;
 
 final class InvalidTokenException extends Exception {

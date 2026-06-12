@@ -8,7 +8,7 @@ use App\Auth\Domain\Repository\VerificationTokenRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 
 use App\Shared\Application\TransactionManagerInterface;
-use App\Shared\Application\Exception\InvalidTokenException;
+use App\Auth\Domain\Exception\InvalidTokenException;
 
 final class AccountConfirm {
     
