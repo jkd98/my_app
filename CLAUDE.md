@@ -12,7 +12,7 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 
 ---
 
-## Progreso actual (2026-06-11)
+## Progreso actual (2026-06-12)
 
 ### Bounded Context: Auth — Domain COMPLETO ✓
 
@@ -42,6 +42,7 @@ src/
   Auth/Domain/Events/UserRegistered.php                             ✓
   Auth/Domain/Exception/EmailAlreadyExistsException.php             ✓
   Auth/Domain/Exception/InvalidCredentialsException.php             ✓
+  Auth/Domain/Exception/InvalidTokenException.php                   ✓
 
   Shared/Application/EventDispatcherInterface.php                   ✓
   Shared/Application/TransactionManagerInterface.php                ✓
@@ -50,8 +51,8 @@ src/
   Auth/Application/UseCase/Login.php                                ✓ (genera access + refresh token)
   Auth/Application/UseCase/Logout.php                               ✓
   Auth/Application/UseCase/LogoutAll.php                            ✓
-  Auth/Application/UseCase/RefreshToken.php                         ← SIGUIENTE
-  Auth/Application/UseCase/PasswordRecovery.php                     pendiente
+  Auth/Application/UseCase/Refresh.php                              ✓ (token rotation: guarda nuevo, borra viejo, dentro de transacción)
+  Auth/Application/UseCase/PasswordRecovery.php                     ← SIGUIENTE
   Auth/Application/DTO/RegisterUserRequestDTO.php                   ✓
   Auth/Application/DTO/LoginRequestDTO.php                          ✓ (incluye userAgent)
   Auth/Application/DTO/LoginResponseDTO.php                         ✓ (accessToken + refreshToken)
@@ -84,3 +85,6 @@ src/
 - JWT payload contiene solo `UserId` (OWASP — mínimo PII)
 - Token rotation implementado: al renovar, se elimina el refresh token viejo y se genera uno nuevo
 - Login: mensaje específico "cuenta no confirmada" (UX > OWASP estricto en este caso)
+- `InvalidTokenException` en `Auth/Domain/Exception/` (es regla de dominio, no de aplicación)
+- `DomainEventInterface` en `Shared/Domain/Event/` (no es un port — no conecta con infraestructura)
+- `UserRegistered` evento: eventId (string) y occurredAt (DateTimeImmutable) generados internamente; email y userName recibidos como VOs de Auth
