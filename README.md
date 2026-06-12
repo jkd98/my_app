@@ -14,3 +14,8 @@ composer dump-autoload
 ```bash
 composer require ramsey/uuid
 ```
+
+***Este comando instala firebase/php-jwt***
+```bash
+composer require firebase/php-jwt
+```
