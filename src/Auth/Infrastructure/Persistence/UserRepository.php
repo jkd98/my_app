@@ -16,8 +16,21 @@ final class UserRepository implements UserRepositoryInterface {
     }
 
     public function findById(UserId $userId):?User{
+        $data = [
+            "userId"=>$userId->value()
+        ];
+        $sql = "SELECT * FROM users WHERE userId = :userId LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($data);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if($user){
+            return self::reconstitute($user);
+        }else{
+            return null;
+        }
     }
-    
+
     public function findByEmail(Email $email):?User{
         $data = [
             "email"=>$email->value()
@@ -28,16 +41,7 @@ final class UserRepository implements UserRepositoryInterface {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($user){
-            return User::reconstitute(
-                UserId::fromString($user['userId']),
-                UserName::create($user['userName']),
-                LastName::create($user['lastName']),
-                Email::create($user['email']),
-                Password::create($user['pass']),
-                (bool)$user['isVerified'],
-                new DateTimeImmutable($user['createdAt']),
-                new DateTimeImmutable($user['updatedAt'])
-            );
+            return self::reconstitute($user);
         }else{
             return null;
         }
@@ -65,5 +69,18 @@ final class UserRepository implements UserRepositoryInterface {
                 ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($data);
+    }
+
+    private static function reconstitute(array $user):User{
+        return User::reconstitute(
+            UserId::fromString($user['userId']),
+            UserName::create($user['userName']),
+            LastName::create($user['lastName']),
+            Email::create($user['email']),
+            Password::create($user['pass']),
+            (bool)$user['isVerified'],
+            new DateTimeImmutable($user['createdAt']),
+            new DateTimeImmutable($user['updatedAt'])
+        );
     }
 }
