@@ -19,3 +19,8 @@ composer require ramsey/uuid
 ```bash
 composer require firebase/php-jwt
 ```
+
+***Este comando instala phpmailer/phpmailer***
+```bash
+composer require phpmailer/phpmailer
+```
