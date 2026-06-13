@@ -12,7 +12,7 @@ use App\Auth\Application\Security\TokenGeneratorInterface;
 use App\Auth\Domain\Repository\RefreshTokenRepositoryInterface;
 use App\Auth\Domain\Exception\InvalidCredentialsException;
 use App\Auth\Domain\Entity\RefreshToken;
-use App\Shared\Application\TransactionManagerInterface;
+use App\Shared\Application\Port\TransactionManagerInterface;
 
 final class Login {
     public function __construct(

@@ -4,8 +4,8 @@ namespace App\Auth\Application\UseCase;
 
 use App\Auth\Domain\Repository\VerificationTokenRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
-use App\Shared\Application\TransactionManagerInterface;
-use App\Shared\Application\EventDispatcherInterface;
+use App\Shared\Application\Port\TransactionManagerInterface;
+use App\Shared\Application\Port\EventDispatcherInterface;
 use App\Auth\Domain\Events\PasswordRecoveryRequested;
 use App\Auth\Domain\Entity\VerificationToken;
 use App\Auth\Domain\ValueObject\TokenType;

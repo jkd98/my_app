@@ -5,7 +5,7 @@ namespace App\Auth\Application\UseCase;
 use App\Auth\Domain\Repository\VerificationTokenRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Domain\Service\PasswordHashInterface;
-use App\Shared\Application\TransactionManagerInterface;
+use App\Shared\Application\Port\TransactionManagerInterface;
 use App\Auth\Domain\Repository\RefreshTokenRepositoryInterface;
 use App\Auth\Domain\ValueObject\TokenValue;
 use App\Auth\Domain\ValueObject\TokenType;

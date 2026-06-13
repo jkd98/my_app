@@ -19,8 +19,8 @@ use App\Auth\Domain\Service\PasswordHashInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Domain\Repository\VerificationTokenRepositoryInterface;
 
-use App\Shared\Application\EventDispatcherInterface;
-use App\Shared\Application\TransactionManagerInterface;
+use App\Shared\Application\Port\EventDispatcherInterface;
+use App\Shared\Application\Port\TransactionManagerInterface;
 
 
 final class RegisterUser {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application;
+namespace App\Shared\Application\Port;
 
 interface TransactionManagerInterface {
     public function begin():void;
