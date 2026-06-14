@@ -18,29 +18,36 @@ final class SmtpMailer implements MailerInterface {
     ){}
 
     public function send(MailDTO $data):void {
+        $appName="JKApp";
         $mail = new PHPMailer(true);
-        try {
-            
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = $this->host;                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = $this->user;                     //SMTP username
-            $mail->Password   = $this->pass;                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+        
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+        $mail->isSMTP(); //Send using SMTP
+        $mail->Host       = $this->host; //Set the SMTP server to send through
+        $mail->SMTPAuth   = true; //Enable SMTP authentication
+        $mail->Username   = $this->user; //SMTP username
+        $mail->Password   = $this->pass; //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //Enable implicit TLS encryption
+        $mail->Port       = 587; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+        $mail->SMTPKeepAlive = true; // agrégalo para mantener la conexión SMTP abierta después de cada email enviado
+        $mail->isHTML(true); //Set email format to HTML
+        $mail->Subject = $data->subject().' - '.$appName;
 
-            $mail->setFrom($this->user, 'Mailer');
+        $mail->setFrom($this->user, $appName); //Remitente
+        //Content
+        $mail->Body = $data->messageBody();
+        $mail->AltBody = 'Confirme su cuenta '.$appName;
 
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mail->send();
-        } catch (\Throwable $th) {
-            throw $th;
+        foreach ($data->recipients() as $userName => $email) {
+            $mail->addAddress($email,$userName);
+            try {
+                $mail->send();
+                error_log("[SmtpMailer]: Email enviado");
+            } catch (\Throwable $th) {
+                error_log("[SmtpMailer]: Email no enviado".$th->getMessage());
+            }
+            $mail->clearAddresses();
         }
+        $mail->smtpClose();
     }
 }
