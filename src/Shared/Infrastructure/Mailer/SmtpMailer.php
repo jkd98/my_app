@@ -14,7 +14,8 @@ final class SmtpMailer implements MailerInterface {
     public function __construct(
         private readonly string $host,
         private readonly string $user,
-        private readonly string $pass
+        private readonly string $pass,
+        private readonly int $port,
     ){}
 
     public function send(MailDTO $data):void {
@@ -28,7 +29,7 @@ final class SmtpMailer implements MailerInterface {
         $mail->Username   = $this->user; //SMTP username
         $mail->Password   = $this->pass; //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //Enable implicit TLS encryption
-        $mail->Port       = 587; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+        $mail->Port       = $this->port; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
         $mail->SMTPKeepAlive = true; // agrégalo para mantener la conexión SMTP abierta después de cada email enviado
         $mail->isHTML(true); //Set email format to HTML
         $mail->Subject = $data->subject().' - '.$appName;
@@ -36,18 +37,20 @@ final class SmtpMailer implements MailerInterface {
         $mail->setFrom($this->user, $appName); //Remitente
         //Content
         $mail->Body = $data->messageBody();
-        $mail->AltBody = 'Confirme su cuenta '.$appName;
+        $mail->AltBody = $data->altBody().' - '.$appName;
 
-        foreach ($data->recipients() as $userName => $email) {
-            $mail->addAddress($email,$userName);
-            try {
+        try {
+            foreach ($data->recipients() as $email) {
+                $mail->addAddress($email);
                 $mail->send();
+                $mail->clearAddresses();
                 error_log("[SmtpMailer]: Email enviado");
-            } catch (\Throwable $th) {
-                error_log("[SmtpMailer]: Email no enviado".$th->getMessage());
             }
-            $mail->clearAddresses();
+        } catch (\Throwable $th) {
+                error_log("[SmtpMailer]: Email no enviado".$th->getMessage());
+                throw $th;
+        }finally{
+            $mail->smtpClose();
         }
-        $mail->smtpClose();
     }
 }

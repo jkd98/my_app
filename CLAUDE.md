@@ -70,7 +70,8 @@ src/
   Auth/Infrastructure/Persistence/RefreshTokenRepository.php        ✓
   Auth/Infrastructure/Http/Controllers/                             pendiente
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       pendiente
-  Shared/Infrastructure/Mailer/SmtpMailer.php                       ← SIGUIENTE
+  Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)
+  Auth/Infrastructure/EventListener/SendEmailConfirmation.php       ← SIGUIENTE
 ```
 
 ### Decisiones de diseño tomadas
