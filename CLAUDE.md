@@ -68,10 +68,12 @@ src/
   Auth/Infrastructure/Persistence/UserRepository.php                ✓ (PDO MySQL, UPSERT)
   Auth/Infrastructure/Persistence/VerificationTokenRepository.php   ✓
   Auth/Infrastructure/Persistence/RefreshTokenRepository.php        ✓
+  Shared/Application/Port/EventListenerInterface.php                ✓
   Auth/Infrastructure/Http/Controllers/                             pendiente
+  Auth/Infrastructure/EventDispatcher/EventDispatcher.php          pendiente ← SIGUIENTE
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       pendiente
   Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)
-  Auth/Infrastructure/EventListener/SendEmailConfirmation.php       ← SIGUIENTE
+  Auth/Infrastructure/EventListener/SendEmailConfirmation.php       ✓
 ```
 
 ### Decisiones de diseño tomadas

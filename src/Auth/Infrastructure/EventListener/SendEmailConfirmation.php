@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Auth\Infrastructure\EventListener;
+
+use App\Shared\Application\Port\EventListenerInterface;
+use App\Shared\Application\Port\MailerInterface;
+use App\Auth\Domain\Repository\VerificationTokenRepositoryInterface;
+use App\Shared\Application\DTO\MailDTO;
+use App\Shared\Domain\Event\DomainEventInterface;
+use App\Auth\Domain\Events\UserRegistered;
+use App\Auth\Domain\ValueObject\TokenType;
+
+final class SendEmailConfirmation implements EventListenerInterface {
+    public function __construct(
+        private readonly MailerInterface $mailer,
+        private readonly VerificationTokenRepositoryInterface $verificationTokenRepository
+    ) {}
+
+    public function handle(DomainEventInterface $event):void {
+        if(!$event instanceof UserRegistered) return;
+
+        $verificationToken = $this->verificationTokenRepository->findByTokenTypeAndUserId(
+            TokenType::EmailConfirmation,
+            $event->userRegisteredId()
+        );
+
+        if(!$verificationToken) return;
+        $recipients[] = $event->email()->value();
+        $body =<<<HTML
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Confirmación de la cuenta</title>
+                <style>
+                    @media(min-width:768px){
+                        header,main{
+                            width: 50%;
+                        }
+                    }
+                </style>
+            </head>
+            <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; box-sizing: border-box; background-color: rgba(19, 1, 29, 0.74); width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                <header style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
+                    <div style="padding: .5rem 1.5rem; width: 100%;">
+                        <h1 style="font-size: 2rem; color: aliceblue; font-weight: 400; width: 100%; text-align: left;">JK<strong style="font-weight: 900;">App</strong></h1>
+                    </div>
+                </header>
+                <main style="border-radius: .5rem; background-color: rgb(13, 6, 19); color: aliceblue; padding: 1rem 1rem 3rem 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <h2 style="padding-bottom: 1rem; text-align: center;">Confirma que eres tú</h2>
+                        <div style="text-align: center; width: 70%; padding-bottom: 2rem;">
+                            <p>Gracias por usar <strong>JKApp</strong></p>
+                            <p>Para confirmar que eres tú y empezar a usar la aplicacion da click en el bóton de abajo.</p>
+                        </div>
+                        <a style="text-decoration: none; color: aliceblue; font-weight: 700; background: rgb(13, 22, 107); padding: 1rem 1.5rem; border-radius: .5rem;" href="example.html?confirmation={$verificationToken->tokenValue()->value()}" target="_blank">Confirmar Cuenta</a>
+                </main>
+            </body>
+            </html>
+        HTML;
+        $mailData = new MailDTO(
+            $recipients,
+            "Confirma tu cuenta",
+            $body,
+            "Por favor confirme su cuenta para poder usa el sistema"
+        );
+        $this->mailer->send($mailData);
+    }
+}
