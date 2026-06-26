@@ -74,8 +74,8 @@ src/
   Auth/Infrastructure/Http/Controllers/RegisterController.php       ✓
   Auth/Infrastructure/Http/Controllers/AccountConfirmController.php ✓
   Auth/Infrastructure/Http/Controllers/LoginController.php          ✓
-  Auth/Infrastructure/Http/Controllers/LogoutController.php         ← SIGUIENTE
-  Auth/Infrastructure/Http/Controllers/LogoutAllController.php      pendiente
+  Auth/Infrastructure/Http/Controllers/LogoutController.php         ✓
+  Auth/Infrastructure/Http/Controllers/LogoutAllController.php      ← SIGUIENTE
   Auth/Infrastructure/Http/Controllers/RefreshController.php        pendiente
   Auth/Infrastructure/Http/Controllers/PasswordRecoveryController.php pendiente
   Auth/Infrastructure/Http/Controllers/ResetPasswordController.php  pendiente

@@ -20,7 +20,7 @@ final class LoginController {
         );
 
         try {
-            $loginResponseDTO = $login->login($loginDTO);
+            $loginResponseDTO = $this->login->login($loginDTO);
             $response = new Response(
                 msg: "Inicio de sessión exitoso",
                 data: [

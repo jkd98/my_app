@@ -14,7 +14,7 @@ final class AccountConfirmController {
     public function execute():void {
         $token = $_GET['token'];
         try {
-            $accountConfirm->confirmAccount($token);
+            $this->accountConfirm->confirmAccount($token);
             $response = new Response(
                 "Cuenta confirmada, ya puede iniciar sesión"
             );
