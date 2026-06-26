@@ -5,8 +5,8 @@ namespace App\Shared\Infrastructure\Http;
 final class Response {
     public function __construct(
         private readonly string $msg,
-        private readonly ?array $data,
-        private readonly ?array $metadata,
+        private readonly ?array $data = null,
+        private readonly ?array $metadata = null,
         private readonly string $status = 'success'
     ) { }
 

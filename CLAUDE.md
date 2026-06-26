@@ -71,7 +71,14 @@ src/
   Shared/Application/Port/EventListenerInterface.php                ✓
   Auth/Infrastructure/Http/Controllers/                             pendiente
   Auth/Infrastructure/EventDispatcher/EventDispatcher.php          ✓
-  Auth/Infrastructure/Http/Controllers/RegisterController.php       EN PROGRESO ← SIGUIENTE
+  Auth/Infrastructure/Http/Controllers/RegisterController.php       ✓
+  Auth/Infrastructure/Http/Controllers/LoginController.php          ← SIGUIENTE
+  Auth/Infrastructure/Http/Controllers/AccountConfirmController.php pendiente
+  Auth/Infrastructure/Http/Controllers/LogoutController.php         pendiente
+  Auth/Infrastructure/Http/Controllers/LogoutAllController.php      pendiente
+  Auth/Infrastructure/Http/Controllers/RefreshController.php        pendiente
+  Auth/Infrastructure/Http/Controllers/PasswordRecoveryController.php pendiente
+  Auth/Infrastructure/Http/Controllers/ResetPasswordController.php  pendiente
   Shared/Infrastructure/Http/Response.php                          ✓
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       pendiente
   Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)
