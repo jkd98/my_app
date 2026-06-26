@@ -73,8 +73,8 @@ src/
   Auth/Infrastructure/EventDispatcher/EventDispatcher.php          ✓
   Auth/Infrastructure/Http/Controllers/RegisterController.php       ✓
   Auth/Infrastructure/Http/Controllers/AccountConfirmController.php ✓
-  Auth/Infrastructure/Http/Controllers/LoginController.php          ← SIGUIENTE
-  Auth/Infrastructure/Http/Controllers/LogoutController.php         pendiente
+  Auth/Infrastructure/Http/Controllers/LoginController.php          ✓
+  Auth/Infrastructure/Http/Controllers/LogoutController.php         ← SIGUIENTE
   Auth/Infrastructure/Http/Controllers/LogoutAllController.php      pendiente
   Auth/Infrastructure/Http/Controllers/RefreshController.php        pendiente
   Auth/Infrastructure/Http/Controllers/PasswordRecoveryController.php pendiente
