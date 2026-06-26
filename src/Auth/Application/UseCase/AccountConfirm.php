@@ -9,6 +9,7 @@ use App\Auth\Domain\Repository\UserRepositoryInterface;
 
 use App\Shared\Application\Port\TransactionManagerInterface;
 use App\Auth\Domain\Exception\InvalidTokenException;
+use App\Auth\Domain\Exception\UserNotFoundException;
 
 final class AccountConfirm {
     
@@ -27,7 +28,7 @@ final class AccountConfirm {
         if($tokenExist->isExpired()) throw new InvalidTokenException("El token ya expiró, para validar la cuenta se deberá solicitar uno nuevo.");
         
         $userExist = $this->userRepository->findById($tokenExist->userId());
-        if (!$userExist) throw new \RuntimeException("Usuario no encontrado");
+        if (!$userExist) throw new UserNotFoundException("Usuario no encontrado");
        
         $userExist->confirmAccount();
 
