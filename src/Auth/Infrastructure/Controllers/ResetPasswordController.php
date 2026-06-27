@@ -12,7 +12,7 @@ final class ResetPasswordController {
     ){}
 
     public function execute(): void {
-        $token = $_GET['token'];
+        $token = $_GET['confirmation'];
         $data = json_decode(file_get_contents('php://input'),true);
 
         try {

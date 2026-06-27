@@ -12,7 +12,7 @@ final class AccountConfirmController {
     ) {}
 
     public function execute():void {
-        $token = $_GET['token'];
+        $token = $_GET['confirmation'];
         try {
             $this->accountConfirm->confirmAccount($token);
             $response = new Response(

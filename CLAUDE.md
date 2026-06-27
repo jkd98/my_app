@@ -12,11 +12,11 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 
 ---
 
-## Progreso actual (2026-06-13)
+## Progreso actual (2026-06-27)
 
 ### Bounded Context: Auth — Domain COMPLETO ✓
 ### Application layer — COMPLETO ✓
-### Infrastructure layer — EN PROGRESO
+### Infrastructure layer — COMPLETO ✓
 
 ```
 src/
@@ -75,10 +75,10 @@ src/
   Auth/Infrastructure/Http/Controllers/AccountConfirmController.php ✓
   Auth/Infrastructure/Http/Controllers/LoginController.php          ✓
   Auth/Infrastructure/Http/Controllers/LogoutController.php         ✓
-  Auth/Infrastructure/Http/Controllers/LogoutAllController.php      ← SIGUIENTE
-  Auth/Infrastructure/Http/Controllers/RefreshController.php        pendiente
-  Auth/Infrastructure/Http/Controllers/PasswordRecoveryController.php pendiente
-  Auth/Infrastructure/Http/Controllers/ResetPasswordController.php  pendiente
+  Auth/Infrastructure/Http/Controllers/LogoutAllController.php      ✓
+  Auth/Infrastructure/Http/Controllers/RefreshController.php        ✓
+  Auth/Infrastructure/Http/Controllers/PasswordRecoveryController.php ✓
+  Auth/Infrastructure/Http/Controllers/ResetPasswordController.php  ✓
   Shared/Infrastructure/Http/Response.php                          ✓
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       pendiente
   Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)

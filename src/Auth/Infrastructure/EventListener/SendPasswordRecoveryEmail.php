@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Auth\Infrastructure\EventListener;
+
+use App\Shared\Application\Port\EventListenerInterface;
+use App\Shared\Application\Port\MailerInterface;
+use App\Shared\Domain\Event\DomainEventInterface;
+use App\Auth\Domain\Events\PasswordRecoveryRequested;
+use App\Shared\Application\DTO\MailDTO;
+
+
+
+final class SendPasswordRecoveryEmail implements EventListenerInterface {
+    public function __construct(
+        private readonly MailerInterface $mailer
+    ) {}
+
+    public function handle(DomainEventInterface $event) {
+        if(!$event instanceof PasswordRecoveryRequested) return;
+
+        $body =<<<HTML
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Cambio de contraseña</title>
+                <style>
+                    @media(min-width:768px){
+                        header,main{
+                            width: 50%;
+                        }
+                    }
+                </style>
+            </head>
+            <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; box-sizing: border-box; background-color: rgba(19, 1, 29, 0.74); width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                <header style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
+                    <div style="padding: .5rem 1.5rem; width: 100%;">
+                        <h1 style="font-size: 2rem; color: aliceblue; font-weight: 400; width: 100%; text-align: left;">JK<strong style="font-weight: 900;">App</strong></h1>
+                    </div>
+                </header>
+                <main style="border-radius: .5rem; background-color: rgb(13, 6, 19); color: aliceblue; padding: 1rem 1rem 3rem 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <h2 style="padding-bottom: 1rem; text-align: center;">Solicitud de cambio de contraseña</h2>
+                        <div style="text-align: center; width: 70%; padding-bottom: 2rem;">
+                            <p>Gracias por usar <strong>JKApp</strong></p>
+                            <p>Para continuar con el proceso y cambiar tu contraseña da click en el botón de abajo.</p>
+                            <small style="width:100%; font-weight:300;" >Si tu no solicitaste este cambio, puedes ignorar el mensaje.</small>
+                        </div>
+                        <a style="text-decoration: none; color: aliceblue; font-weight: 700; background: rgb(13, 22, 107); padding: 1rem 1.5rem; border-radius: .5rem;" href="example.html?confirmation={$event->tokenRecoveryValue()->value()}" target="_blank">Cambiar contraseña</a>
+                </main>
+            </body>
+            </html>
+        HTML;
+    
+        $mailDTO = new MailDTO(
+            [$event->email()->value()],
+            "Solicitud para cambio de contraseña",
+            $body,
+            "Confirmación para el cambio de contraseña"
+        );
+
+        $this->mailer->send($mailDTO);
+    }   
+}
