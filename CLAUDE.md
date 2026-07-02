@@ -12,11 +12,12 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 
 ---
 
-## Progreso actual (2026-06-27)
+## Progreso actual (2026-07-01)
 
 ### Bounded Context: Auth — Domain COMPLETO ✓
 ### Application layer — COMPLETO ✓
 ### Infrastructure layer — COMPLETO ✓
+### Shared Infrastructure — DI Container COMPLETO ✓
 
 ```
 src/
@@ -83,6 +84,8 @@ src/
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       pendiente
   Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       ✓
+  Shared/Infrastructure/Di/Container.php                            ✓ (Resolución automática + singleton)
+  Shared/Infrastructure/Di/ContainerConfig.php                      (en progreso — registro de bindings)
 ```
 
 ### Decisiones de diseño tomadas
@@ -118,3 +121,14 @@ src/
 - `MailDTO` con `array $recipients` para soportar múltiples destinatarios
 - `EventDispatcherInterface` y `TransactionManagerInterface` en `Shared/Application/Port/`
 - Experimento planeado: usar MySQL en un equipo y PostgreSQL en otro para validar la arquitectura hexagonal
+
+### Container de Inyección de Dependencias
+- `Container` es estricto — solo instancia clases registradas (no instancia automáticamente)
+- `$targetClass` (clave de instancias) siempre es `$requiredClass` para unicidad
+- `$implementation` es lo que se instancia (string de clase o callable)
+- Singletons: una instancia por clave, compartida globalmente
+- Resolución recursiva: si una clase depende de otra registrada, la resuelve automáticamente
+- Usa Reflection para inspeccionar constructores e inyectar dependencias
+- Filtra tipos primitivos (string, int, bool, float, array, object) para evitar resolverlos
+- Maneja tres escenarios de constructor: con parámetros, vacío, no existe
+- `ContainerConfig` es método estático (no instanciable) — agrupa la configuración de bindings
