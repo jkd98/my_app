@@ -25,6 +25,7 @@ final class ContainerConfig {
                 );
             },
             "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
+            "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
         ];
 
         foreach($classToInstance as $key => $value){
