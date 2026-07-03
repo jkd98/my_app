@@ -7,15 +7,15 @@ use PDO;
 final class TransactionManager implements TransactionManagerInterface {
     public function __construct(private readonly PDO $pdo){}
 
-    public function begin(){
+    public function begin():void{
         $this->pdo->beginTransaction();
     }
 
-    public function commit(){
+    public function commit():void{
         $this->pdo->commit();
     }
 
-    public function rollback(){
+    public function rollback():void{
         $this->pdo->rollback();
     }
 }
