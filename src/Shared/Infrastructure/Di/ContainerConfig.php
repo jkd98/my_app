@@ -18,12 +18,13 @@ final class ContainerConfig {
             "App\Shared\Application\Port\EventDispatcherInterface" => "App\Auth\Infrastructure\EventDispatcher\EventDispatcher",
             "App\Shared\Application\Port\TransactionManagerInterface" => "App\Shared\Infrastructure\Persistence\TransactionManager",
             "PDO" => function(){ 
-                return new PDO(
+                return new \PDO(
                     'mysql:host='.getenv('DB_HOST').';dbname='.getenv('DB_NAME').';charset=utf8mb4',
                     getenv('DB_USER'),
                     getenv('DB_PASSWORD')
                 );
-            }
+            },
+            "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
         ];
 
         foreach($classToInstance as $key => $value){
