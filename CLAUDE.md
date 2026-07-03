@@ -18,6 +18,8 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 ### Application layer — COMPLETO ✓
 ### Infrastructure layer — COMPLETO ✓
 ### Shared Infrastructure — DI Container COMPLETO ✓
+### Shared Infrastructure — Bootstrap + EnvironmentLoader COMPLETO ✓
+### HTTP Routing — EN PROGRESO (Router principal y por bounded context)
 
 ```
 src/
@@ -85,7 +87,10 @@ src/
   Shared/Infrastructure/Mailer/SmtpMailer.php                       ✓ (PHPMailer, STARTTLS, try/finally para smtpClose)
   Auth/Infrastructure/EventListener/SendEmailConfirmation.php       ✓
   Shared/Infrastructure/Di/Container.php                            ✓ (Resolución automática + singleton)
-  Shared/Infrastructure/Di/ContainerConfig.php                      (en progreso — registro de bindings)
+  Shared/Infrastructure/Di/ContainerConfig.php                      ✓ (registro de bindings, PDO callable)
+  Shared/Infrastructure/Bootstrap/EnvironmentLoader.php             ✓ (carga .env con putenv)
+  public/index.php                                                  ✓ (bootstrap principal)
+  Shared/Infrastructure/Router/Router.php                           (en progreso — orquestador de rutas)
 ```
 
 ### Decisiones de diseño tomadas
@@ -132,3 +137,12 @@ src/
 - Filtra tipos primitivos (string, int, bool, float, array, object) para evitar resolverlos
 - Maneja tres escenarios de constructor: con parámetros, vacío, no existe
 - `ContainerConfig` es método estático (no instanciable) — agrupa la configuración de bindings
+- `EnvironmentLoader` carga `.env` con `putenv()`, filtra comentarios (#) y líneas vacías
+- PDO requiere `\PDO` (backslash) para referir clase global, no namespace de app
+
+### HTTP Routing (en progreso)
+- Router principal (`Shared/Infrastructure/Router/Router.php`) orquestador
+- Un Router por bounded context (`Auth/Infrastructure/Router/AuthRouter.php`, etc.)
+- Identifica bounded context por primera parte del path: `/auth/register` → `auth`
+- Array por método HTTP (GET, POST) y path → controlador
+- Delega a routers específicos para resolver controladores

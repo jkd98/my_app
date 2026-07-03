@@ -6,4 +6,3 @@ use App\Shared\Infrastructure\Di\ContainerConfig;
 
 EnvironmentLoader::load();
 $container = ContainerConfig::create();
-$container->get("App\Auth\Application\UseCase\RegisterUser");

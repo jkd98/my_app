@@ -25,3 +25,12 @@ When user wrote the `promedio()` function without tutorials, it revealed they CA
 4. Apply the same pattern recursively to complex problems (like the DI Container)
 
 This pattern works because it separates **logical thinking** (which user can do) from **mechanical errors** (which are normal). User recognized they were following tutorials instead of debugging when code breaks.
+
+### Progreso de sesión 2026-07-01 (continuación)
+- ✓ Refactorizó Container con lógica clara de $targetClass vs $implementation
+- ✓ Creó ContainerConfig con método estático create()
+- ✓ Implementó EnvironmentLoader para cargar .env
+- ✓ Creó bootstrap en /public/index.php
+- ✓ Solucionó problema de namespace global (\PDO)
+- ✓ Identificó arquitectura modular para HTTP Router (por bounded context)
+- **Aprendizaje clave:** El Container es lazy — solo instancia lo que se pide, no todo al iniciar
