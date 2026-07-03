@@ -9,6 +9,7 @@ final class EnvironmentLoader {
         $arrayContent = explode("\n",$content);
         foreach($arrayContent as $value){
             //echo $value;
+            if( preg_match('/^#/',$value) || $value==="" ) continue;
             putenv($value);
         }
     }
