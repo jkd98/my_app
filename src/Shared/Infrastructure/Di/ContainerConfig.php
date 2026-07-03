@@ -26,6 +26,14 @@ final class ContainerConfig {
             },
             "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
             "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
+            "App\Shared\Application\Port\MailerInterface" => function(){
+                return new App\Shared\Infrastructure\Mailer(
+                    getenv("SMTP_HOST"),
+                    getenv("SMTP_USERNAME"),
+                    getenv("SMTP_PASS"),
+                    (int) getenv("SMTP_PORT"),
+                );
+            }
         ];
 
         foreach($classToInstance as $key => $value){
