@@ -19,7 +19,8 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 ### Infrastructure layer — COMPLETO ✓
 ### Shared Infrastructure — DI Container COMPLETO ✓
 ### Shared Infrastructure — Bootstrap + EnvironmentLoader COMPLETO ✓
-### HTTP Routing — EN PROGRESO (Router principal y por bounded context)
+### HTTP Routing — COMPLETO ✓
+### Flujo HTTP end-to-end (Request → Router → DI → Controller → DB → Events → Email) — FUNCIONAL ✓
 
 ```
 src/
@@ -89,8 +90,13 @@ src/
   Shared/Infrastructure/Di/Container.php                            ✓ (Resolución automática + singleton)
   Shared/Infrastructure/Di/ContainerConfig.php                      ✓ (registro de bindings, PDO callable)
   Shared/Infrastructure/Bootstrap/EnvironmentLoader.php             ✓ (carga .env con putenv)
-  public/index.php                                                  ✓ (bootstrap principal)
-  Shared/Infrastructure/Router/Router.php                           (en progreso — orquestador de rutas)
+  public/index.php                                                  ✓ (bootstrap principal, date_default_timezone_set UTC)
+  Shared/Infrastructure/Router/Router.php                           ✓ (orquestador de rutas por bounded context)
+  Auth/Infrastructure/Router/AuthRouter.php                         ✓ (rutas específicas de Auth)
+  database/migrations/
+    001_create_users_table.sql                                      ✓
+    002_create_verification_tokens.sql                              ✓
+    003_create_refresh_tokens.sql                                   ✓
 ```
 
 ### Decisiones de diseño tomadas
@@ -126,6 +132,10 @@ src/
 - `MailDTO` con `array $recipients` para soportar múltiples destinatarios
 - `EventDispatcherInterface` y `TransactionManagerInterface` en `Shared/Application/Port/`
 - Experimento planeado: usar MySQL en un equipo y PostgreSQL en otro para validar la arquitectura hexagonal
+- **Zona horaria:** `date_default_timezone_set('UTC')` en bootstrap — aplicación + BD siempre en UTC
+- **Variables de entorno:** `.env` con valores entrecomillados para valores con espacios (ej: SMTP_PASSWORD="xxxx xxxx xxxx xxxx")
+- **Listeners de eventos:** Se registran en bootstrap via `EventDispatcher::addListener()` ANTES de ejecutar el controlador
+- **Credenciales Gmail:** Requiere App Password (no contraseña de cuenta), generar en https://myaccount.google.com/apppasswords
 
 ### Container de Inyección de Dependencias
 - `Container` es estricto — solo instancia clases registradas (no instancia automáticamente)
@@ -140,9 +150,12 @@ src/
 - `EnvironmentLoader` carga `.env` con `putenv()`, filtra comentarios (#) y líneas vacías
 - PDO requiere `\PDO` (backslash) para referir clase global, no namespace de app
 
-### HTTP Routing (en progreso)
+### HTTP Routing (COMPLETO)
 - Router principal (`Shared/Infrastructure/Router/Router.php`) orquestador
 - Un Router por bounded context (`Auth/Infrastructure/Router/AuthRouter.php`, etc.)
 - Identifica bounded context por primera parte del path: `/auth/register` → `auth`
-- Array por método HTTP (GET, POST) y path → controlador
+- Array de rutas por método HTTP (GET, POST) y path → controlador (string, no instancia)
 - Delega a routers específicos para resolver controladores
+- Bootstrap limpia path de query strings antes de routear
+- Controllers se instancian via Container (con todas sus dependencias resueltas)
+- Controllers ejecutan método `execute()` que retorna void (lógica en Use Case)

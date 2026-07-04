@@ -26,11 +26,22 @@ When user wrote the `promedio()` function without tutorials, it revealed they CA
 
 This pattern works because it separates **logical thinking** (which user can do) from **mechanical errors** (which are normal). User recognized they were following tutorials instead of debugging when code breaks.
 
-### Progreso de sesión 2026-07-01 (continuación)
+### Progreso de sesión 2026-07-01 (completo)
 - ✓ Refactorizó Container con lógica clara de $targetClass vs $implementation
 - ✓ Creó ContainerConfig con método estático create()
-- ✓ Implementó EnvironmentLoader para cargar .env
+- ✓ Implementó EnvironmentLoader para cargar .env (con filtro de comentarios)
 - ✓ Creó bootstrap en /public/index.php
 - ✓ Solucionó problema de namespace global (\PDO)
 - ✓ Identificó arquitectura modular para HTTP Router (por bounded context)
-- **Aprendizaje clave:** El Container es lazy — solo instancia lo que se pide, no todo al iniciar
+- ✓ Implementó Router principal y AuthRouter (completos y funcionales)
+- ✓ Creó 3 migraciones SQL con constraints nombrados y CHARACTER SET utf8mb4
+- ✓ Solucionó problema de zona horaria (UTC en toda la app)
+- ✓ Solucionó problema de SMTP (comillas en .env para valores con espacios)
+- ✓ Flujo HTTP end-to-end funcionando: Request → Router → DI → Controller → DB → Events → Email
+
+**Aprendizajes clave:**
+1. El Container es lazy — solo instancia lo que se pide
+2. Separación de responsabilidades — Router busca, Bootstrap instancia, Controller ejecuta
+3. Zona horaria profesional — trabajar siempre en UTC
+4. Variables de entorno — valores con espacios requieren comillas en .env
+5. Debugging con logs — SMTPDebug revela problemas reales vs errores genéricos
