@@ -27,13 +27,15 @@ final class ContainerConfig {
             "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
             "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
             "App\Shared\Application\Port\MailerInterface" => function(){
-                return new App\Shared\Infrastructure\Mailer(
+                return new \App\Shared\Infrastructure\Mailer\SmtpMailer(
                     getenv("SMTP_HOST"),
                     getenv("SMTP_USERNAME"),
-                    getenv("SMTP_PASS"),
+                    getenv("SMTP_PASSWORD"),
                     (int) getenv("SMTP_PORT"),
                 );
-            }
+            },
+            "App\Auth\Infrastructure\EventListener\SendEmailConfirmation" => "App\Auth\Infrastructure\EventListener\SendEmailConfirmation",
+            "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository"
         ];
 
         foreach($classToInstance as $key => $value){

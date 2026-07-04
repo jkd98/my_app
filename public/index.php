@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('UTC');
 require_once __DIR__.'/../vendor/autoload.php';
 
 use App\Shared\Infrastructure\Bootstrap\EnvironmentLoader;
@@ -8,6 +9,9 @@ use App\Shared\Infrastructure\Http\Response;
 
 EnvironmentLoader::load();
 $container = ContainerConfig::create();
+
+$dispatcher = $container->get("App\Shared\Application\Port\EventDispatcherInterface");
+$dispatcher->addListener("App\Auth\Domain\Events\UserRegistered",$container->get("App\Auth\Infrastructure\EventListener\SendEmailConfirmation"));
 
 $request_method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'];
