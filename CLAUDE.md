@@ -12,8 +12,9 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 
 ---
 
-## Progreso actual (2026-07-01)
+## Progreso actual (2026-07-04)
 
+### Backend
 ### Bounded Context: Auth — Domain COMPLETO ✓
 ### Application layer — COMPLETO ✓
 ### Infrastructure layer — COMPLETO ✓
@@ -21,6 +22,10 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 ### Shared Infrastructure — Bootstrap + EnvironmentLoader COMPLETO ✓
 ### HTTP Routing — COMPLETO ✓
 ### Flujo HTTP end-to-end (Request → Router → DI → Controller → DB → Events → Email) — FUNCIONAL ✓
+
+### Frontend
+### Arquitectura — EN PROGRESO (modular por bounded context)
+### Auth/Register — HTML EN PROGRESO
 
 ```
 src/
@@ -97,6 +102,21 @@ src/
     001_create_users_table.sql                                      ✓
     002_create_verification_tokens.sql                              ✓
     003_create_refresh_tokens.sql                                   ✓
+  
+  frontend/
+    shared/
+      api.js                                                        (en progreso)
+      utils.js                                                      (en progreso)
+    Auth/Register/
+      register.html                                                 (en progreso)
+      register.js                                                   (pendiente)
+      register.css                                                  (pendiente)
+    Auth/Login/
+      (pendiente)
+    Training/
+      (pendiente)
+    Finance/
+      (pendiente)
 ```
 
 ### Decisiones de diseño tomadas
@@ -136,6 +156,18 @@ src/
 - **Variables de entorno:** `.env` con valores entrecomillados para valores con espacios (ej: SMTP_PASSWORD="xxxx xxxx xxxx xxxx")
 - **Listeners de eventos:** Se registran en bootstrap via `EventDispatcher::addListener()` ANTES de ejecutar el controlador
 - **Credenciales Gmail:** Requiere App Password (no contraseña de cuenta), generar en https://myaccount.google.com/apppasswords
+
+### Frontend Architecture (HTML/CSS/JS)
+- Arquitectura modular por **bounded context** (Auth, Training, Finance, Shared)
+- Cada bounded context contiene **módulos por vista/caso de uso** (Register, Login, etc.)
+- Cada módulo = carpeta con: `module.html`, `module.js`, `module.css`
+- **Shared bounded context** para código reutilizable: `api.js`, `utils.js`
+- **Estado compartido** via `LocalStorage` (entre módulos del mismo BC)
+- **Frontend independiente:** HTML puro + Vanilla JS (no frameworks aún)
+- **Separación por puerto:** Backend en `localhost:8000`, Frontend en `localhost:3000`
+- **Consumo de API:** Fetch desde `shared/api.js` centralizando llamadas HTTP
+- **Sin PHP en frontend:** HTML se ejecuta en navegador, PHP solo en backend
+- **Próximo paso:** Aprender Vanilla JS 3-4 semanas, luego React
 
 ### Container de Inyección de Dependencias
 - `Container` es estricto — solo instancia clases registradas (no instancia automáticamente)

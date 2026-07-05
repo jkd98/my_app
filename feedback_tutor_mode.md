@@ -45,3 +45,15 @@ This pattern works because it separates **logical thinking** (which user can do)
 3. Zona horaria profesional — trabajar siempre en UTC
 4. Variables de entorno — valores con espacios requieren comillas en .env
 5. Debugging con logs — SMTPDebug revela problemas reales vs errores genéricos
+6. **DDD es transferible al frontend** — usar bounded contexts, módulos, separación clara
+7. **Arquitectura antes de código** — pensar estructura antes de escribir línea 1
+8. **HTML puro para aprender** — separar frontend (navegador) de backend (servidor)
+9. **Reutilización en JS** — igual que en PHP, pero con funciones/módulos JS
+
+### Sesión 2026-07-04 (Frontend setup)
+- ✓ Pensó en arquitectura frontend usando DDD (bounded contexts + módulos)
+- ✓ Decidió estructura: `frontend/Auth/Register/`, `frontend/shared/`
+- ✓ Entendió diferencia: PHP genera HTML (servidor) vs HTML/JS ejecuta (navegador)
+- ✓ Eligió vanilla JS + localhost:3000 para aprender fundamentos
+- ✓ Identificó que DDD/Hexagonal Architecture aplica a frontend también
+- **Aprendizaje meta:** El usuario trasladó patrones de backend al frontend sin ser guiado — indica comprensión profunda
