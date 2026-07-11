@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JKApp - Registro</title>
+    <link rel="stylesheet" href="../../shared/app.css">
     <link rel="stylesheet" href="register.css">
 </head>
 <body>
     <main class="main">
-        <form >
+        <header>
+            
+        </header>
+        <form class="form" >
+            <div class="form__campo">
+                <label for="userName" class="form__campo--label">Nombre(s)</label>
+                <input type="text" name="userName" id="userName" class="form__campo--itxt" placeholder="Ej. José Juan">
+            </div>
 
+            <div class="form__campo">
+                <label for="lastName" class="form__campo--label">Apellido(s)</label>
+                <input type="text" name="lastName" id="lastName" class="form__campo--itxt" placeholder="Ej. De la Huerta">
+            </div>
+
+            <div class="form__campo">
+                <label for="email" class="form__campo--label">Email</label>
+                <input type="email" name="email" id="email" class="form__campo--iemail" placeholder="Ej. juan@gmail.com">
+            </div>
+
+            <div class="form__campo">
+                <label for="rawPassword" class="form__campo--label">Contraseña</label>
+                <input type="password" name="rawPassword" id="rawPassword" class="form__campo--ipwd" placeholder="Ej. ********">
+            </div>
+
+            <div class="form__campo">
+                <label for="rawPasswordRepeat" class="form__campo--label">Confirma la contraseña</label>
+                <input type="password" name="rawPasswordRepeat" id="rawPasswordRepeat" class="form__campo--ipwd" placeholder="Ej. ********">
+            </div>
+            <div class="form__campo">
+                <button class="btn form__btn-submit--color" >Registrarme</button>
+            </div>
         </form>
     </main>
 </body>

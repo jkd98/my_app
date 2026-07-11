@@ -56,4 +56,9 @@ This pattern works because it separates **logical thinking** (which user can do)
 - ✓ Entendió diferencia: PHP genera HTML (servidor) vs HTML/JS ejecuta (navegador)
 - ✓ Eligió vanilla JS + localhost:3000 para aprender fundamentos
 - ✓ Identificó que DDD/Hexagonal Architecture aplica a frontend también
+- ✓ Escribió formulario HTML con BEM (Block__Element--Modifier)
+- ✓ Aprendió mobile-first CSS (base mobile, media queries)
+- ✓ Entendió CSS reset y `1rem = 10px`
+- ✓ Pensó en diseño antes de escribir código (centrado, responsive)
 - **Aprendizaje meta:** El usuario trasladó patrones de backend al frontend sin ser guiado — indica comprensión profunda
+- **Patrón:** Pensamiento arquitectónico antes de implementación (igual que en backend)

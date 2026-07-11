@@ -25,7 +25,7 @@ Personal PHP web app to practice hexagonal architecture + DDD.
 
 ### Frontend
 ### Arquitectura — EN PROGRESO (modular por bounded context)
-### Auth/Register — HTML EN PROGRESO
+### Auth/Register — HTML COMPLETO ✓, CSS EN PROGRESO
 
 ```
 src/
@@ -105,12 +105,13 @@ src/
   
   frontend/
     shared/
+      app.css                                                       ✓ (reset CSS, 1rem = 10px, box-sizing border-box)
       api.js                                                        (en progreso)
       utils.js                                                      (en progreso)
     Auth/Register/
-      register.html                                                 (en progreso)
+      register.html                                                 ✓ (formulario con BEM, campos de registro)
       register.js                                                   (pendiente)
-      register.css                                                  (pendiente)
+      register.css                                                  (en progreso — mobile-first, BEM)
     Auth/Login/
       (pendiente)
     Training/
@@ -161,12 +162,15 @@ src/
 - Arquitectura modular por **bounded context** (Auth, Training, Finance, Shared)
 - Cada bounded context contiene **módulos por vista/caso de uso** (Register, Login, etc.)
 - Cada módulo = carpeta con: `module.html`, `module.js`, `module.css`
-- **Shared bounded context** para código reutilizable: `api.js`, `utils.js`
+- **Shared bounded context** para código reutilizable: `api.js`, `utils.js`, `app.css`
 - **Estado compartido** via `LocalStorage` (entre módulos del mismo BC)
 - **Frontend independiente:** HTML puro + Vanilla JS (no frameworks aún)
 - **Separación por puerto:** Backend en `localhost:8000`, Frontend en `localhost:3000`
 - **Consumo de API:** Fetch desde `shared/api.js` centralizando llamadas HTTP
 - **Sin PHP en frontend:** HTML se ejecuta en navegador, PHP solo en backend
+- **BEM para CSS:** Block__Element--Modifier (escalable, mantenible)
+- **Mobile-first:** Estilos base para mobile, media queries para tablet/desktop
+- **CSS Reset:** `box-sizing: border-box`, `1rem = 10px`, margin/padding reset
 - **Próximo paso:** Aprender Vanilla JS 3-4 semanas, luego React
 
 ### Container de Inyección de Dependencias
