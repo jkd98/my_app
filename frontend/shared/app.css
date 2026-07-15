@@ -2,6 +2,8 @@
     --primary-bg: #d1b0d4;
     --secondary-bg: #3e346c;
     --glass-bg: #3e346c31;
+    --bg-red: #fdb2b2d0;
+    --color-red: #af0202;
     --primary-color: #00003a;
     --secondary-color: #d1b0d4;
 }
@@ -62,6 +64,24 @@ input {
 
 input::placeholder {
     color: var(--secondary-color);
+}
+
+input.error {
+    border-bottom-color:  var(--color-red);
+    transition: border-bottom-color 300ms ease-in-out;
+}
+
+.form__campo--error {
+    display: block;
+    width: 100%;
+    padding: .8rem;
+    color: var(--color-red);
+    background-color: var(--bg-red);
+    border: none;
+    font-weight: 500;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    margin-top: .5rem;
 }
 
 .btn {

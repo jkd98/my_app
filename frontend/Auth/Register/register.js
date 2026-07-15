@@ -1,3 +1,5 @@
+import {fetchAPI} from "../../shared/api.js"
+
 window.document.addEventListener('DOMContentLoaded', init);
 
 const validations = {
@@ -28,18 +30,18 @@ let userForm = {
     lastName: {
         element: window.document.getElementById('lastName'),
         validations: [validations.NOT_NULL, validations.ONLY_LETTERS],
-        msgs: ["Este campo no puede ir vacío","El apellido solo puede contener letras"]
+        msgs: ["Este campo no puede ir vacío", "El apellido solo puede contener letras"]
     },
     email: {
         element: window.document.getElementById('email'),
         validations: [validations.NOT_NULL, validations.IS_EMAIL],
-        msgs: ["Este campo no puede ir vacío","Esto no parece un email"]
+        msgs: ["Este campo no puede ir vacío", "Esto no parece un email"]
     },
     rawPassword: {
         element: window.document.getElementById('rawPassword'),
         validations: [validations.NOT_NULL, validations.MIN_LENGTH],
         msgs: ["Este campo no puede ir vacío", "La contraseña debe tener al menos 8 caracteres"],
-        options: [null,{min:8}]
+        options: [null, { min: 8 }]
     },
     rawPasswordRepeat: {
         element: window.document.getElementById('rawPasswordRepeat'),
@@ -59,14 +61,22 @@ function handleSubmit() {
     let form = window.document.getElementById('form');
     let btnSubmit = window.document.getElementById('register-btn');
     let hasErrors = false;
-    btnSubmit.addEventListener('click', (ev) => {
+    btnSubmit.addEventListener('click', async (ev) => {
         ev.preventDefault();
         validateForm();
         if ([...form.getElementsByClassName("error")].length > 0) {
             hasErrors = true;
             return;
         }
-        console.log("[DEBUG_DATA]: Data to send...")
+
+        const dataToSend = {
+            userName: userForm.userName.element.value,
+            lastName: userForm.lastName.element.value,
+            email: userForm.email.element.value,
+            rawPassword: userForm.rawPassword.element.value
+        }
+        console.log("[DEBUG_DATA]: Data to send... "+ JSON.stringify(dataToSend))
+        const response = await fetchAPI('/auth/register',dataToSend,'POST');
     })
 }
 
@@ -83,12 +93,12 @@ function validateField(fieldName, fieldObj) {
     let errors = [];
     fieldObj.validations.forEach((validation, i) => {
         let error = null;
-        if(fieldObj.options){
+        if (fieldObj.options) {
             error = validation(value, fieldObj.msgs[i], fieldObj.options[i])
-        }else{
-            error = validation(value, fieldObj.msgs[i])   
+        } else {
+            error = validation(value, fieldObj.msgs[i])
         }
-        
+
         if (error !== null) {
             errors = [...errors, error];
         }
