@@ -6,9 +6,12 @@ use App\Shared\Infrastructure\Bootstrap\EnvironmentLoader;
 use App\Shared\Infrastructure\Di\ContainerConfig;
 use App\Shared\Infrastructure\Router\Router;
 use App\Shared\Infrastructure\Http\Response;
+use App\Shared\Infrastructure\Middleware\CORSMiddleware;
+
 
 EnvironmentLoader::load();
 $container = ContainerConfig::create();
+CORSMiddleware::handle();
 
 $dispatcher = $container->get("App\Shared\Application\Port\EventDispatcherInterface");
 $dispatcher->addListener("App\Auth\Domain\Events\UserRegistered",$container->get("App\Auth\Infrastructure\EventListener\SendEmailConfirmation"));
