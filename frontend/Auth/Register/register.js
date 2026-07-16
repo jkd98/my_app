@@ -1,4 +1,5 @@
 import {fetchAPI} from "../../shared/api.js"
+import { toast } from "../../shared/utils.js";
 
 window.document.addEventListener('DOMContentLoaded', init);
 
@@ -77,6 +78,14 @@ function handleSubmit() {
         }
         console.log("[DEBUG_DATA]: Data to send... "+ JSON.stringify(dataToSend))
         const response = await fetchAPI('/auth/register',dataToSend,'POST');
+        console.log(response);
+        if(!response.ok){
+            toast(3000,'error',response.error);
+            return;
+        }
+
+        toast(5000,'success',"Regsitro exitoso")
+
     })
 }
 
