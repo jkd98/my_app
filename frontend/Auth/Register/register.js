@@ -79,12 +79,17 @@ function handleSubmit() {
         console.log("[DEBUG_DATA]: Data to send... "+ JSON.stringify(dataToSend))
         const response = await fetchAPI('/auth/register',dataToSend,'POST');
         console.log(response);
-        if(!response.ok){
+        if(!response.ok && !response.status){
             toast(3000,'error',response.error);
             return;
         }
 
-        toast(5000,'success',"Regsitro exitoso")
+        if(!response.ok && response.status){
+            toast(5000,'warning',response.data.msg);
+            return;
+        }
+
+        toast(5000,'success',response.data.msg)
 
     })
 }
