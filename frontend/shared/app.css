@@ -53,6 +53,7 @@ body {
     font-weight: 400;
     text-align: left;
     padding-block: 2rem;
+    width: 100%;
 }
 
 /* element input to forms */
@@ -156,4 +157,24 @@ input.error {
 .toast--success {
     background-color: var(--bg-green);
     border-color: var(--color-green);
+}
+
+/*spinner*/
+
+.spinner {
+    width: 5rem;
+    height: 5rem;
+    border: .5rem solid var(--secondary-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
