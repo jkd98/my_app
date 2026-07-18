@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JKApp - Iniciar sesión</title>
+    <link rel="stylesheet" href="../../shared/app.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <main class="main flex-center">
+        <form class="form" id="form">
+            <h1 class="heading">Inicia sesión en <strong>JKApp</strong></h1>
+            
+            <div class="form__campo">
+                <label for="email" class="form__campo--label">Email</label>
+                <input type="email" name="email" id="email" class="form__campo--iemail"
+                    placeholder="Ej. juan@gmail.com">
+            </div>
+
+            <div class="form__campo">
+                <label for="rawPassword" class="form__campo--label">Contraseña</label>
+                <input type="password" name="rawPassword" id="rawPassword" class="form__campo--ipwd"
+                    placeholder="Ej. ********">
+            </div>
+
+            <div class="form__campo">
+                <button class="btn form__btn--primary" id="register-btn">Iniciar Sesión</button>
+            </div>
+        </form>
+    </main>
+    <script src="register.js" type="module" ></script>
+</body>
+
+</html>

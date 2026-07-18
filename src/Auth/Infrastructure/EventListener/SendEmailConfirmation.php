@@ -24,6 +24,8 @@ final class SendEmailConfirmation implements EventListenerInterface {
             $event->userRegisteredId()
         );
 
+        $host = getenv('ORIGIN_ONE');
+
         if(!$verificationToken) return;
         $recipients[] = $event->email()->value();
         $body =<<<HTML
@@ -78,7 +80,7 @@ final class SendEmailConfirmation implements EventListenerInterface {
                                         <table cellpadding="0" cellspacing="0" border="0">
                                             <tr>
                                                 <td align="center" bgcolor="#0d166b" style="border-radius: 8px;">
-                                                    <a href="example.html?confirmation={$verificationToken->tokenValue()->value()}"
+                                                    <a href="{$host}/Auth/ConfirmAccount/confirm-account.html?confirmation={$verificationToken->tokenValue()->value()}"
                                                         target="_blank"
                                                         style="font-size: 16px; font-weight: bold; color: #ffffff; text-decoration: none; padding: 15px 30px; display: inline-block; font-family: 'Segoe UI', sans-serif;">
                                                         Confirmar Cuenta

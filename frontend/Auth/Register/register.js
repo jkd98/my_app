@@ -1,5 +1,5 @@
-import {fetchAPI} from "../../shared/api.js"
-import { toast } from "../../shared/utils.js";
+import { fetchAPI } from "../../shared/api.js"
+import { toast } from "../../shared/toast.js";
 
 window.document.addEventListener('DOMContentLoaded', init);
 
@@ -50,11 +50,13 @@ let userForm = {
         msgs: ["Este campo no puede ir vacío"]
     }
 }
+let spinner = window.document.getElementById('spinner');
 
 
 function init() {
     console.log("[DEBUG]: INICIO REGISTER SCRIPT")
     handleSubmit();
+    spinner.classList.add('hidden');
 }
 
 
@@ -69,27 +71,33 @@ function handleSubmit() {
             hasErrors = true;
             return;
         }
-
+        
         const dataToSend = {
             userName: userForm.userName.element.value,
             lastName: userForm.lastName.element.value,
             email: userForm.email.element.value,
             rawPassword: userForm.rawPassword.element.value
         }
-        console.log("[DEBUG_DATA]: Data to send... "+ JSON.stringify(dataToSend))
-        const response = await fetchAPI('/auth/register',dataToSend,'POST');
+        console.log("[DEBUG_DATA]: Data to send... " + JSON.stringify(dataToSend));
+        spinner.classList.remove('hidden');
+        form.classList.add('hidden');
+        
+        const response = await fetchAPI('/auth/register', dataToSend, 'POST');
         console.log(response);
-        if(!response.ok && !response.status){
-            toast(3000,'error',response.error);
+        if (!response.ok && !response.status) {
+            toast(3000, 'error', response.error);
             return;
         }
 
-        if(!response.ok && response.status){
-            toast(5000,'warning',response.data.msg);
+        if (!response.ok && response.status) {
+            toast(5000, 'warning', response.data.msg);
             return;
         }
 
-        toast(5000,'success',response.data.msg)
+        toast(5000, 'success', response.data.msg);
+        form.reset();
+        spinner.classList.add('hidden');
+        form.classList.remove('hidden');
 
     })
 }

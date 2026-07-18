@@ -11,11 +11,18 @@ final class ContainerConfig {
         $container = new Container();
 
         $classToInstance = [
-            "App\Auth\Domain\Repository\UserRepositoryInterface" => "App\Auth\Infrastructure\Persistence\UserRepository",
-            "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository",
+            "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
+            "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
             "App\Auth\Domain\Service\PasswordHashInterface" => "App\Auth\Infrastructure\Security\PasswordHash",
             "App\Auth\Domain\Service\VerifyEmailExist" => "App\Auth\Domain\Service\VerifyEmailExist",
             "App\Shared\Application\Port\EventDispatcherInterface" => "App\Auth\Infrastructure\EventDispatcher\EventDispatcher",
+            "App\Auth\Infrastructure\EventListener\SendEmailConfirmation" => "App\Auth\Infrastructure\EventListener\SendEmailConfirmation",
+            
+            "App\Auth\Infrastructure\Controllers\AccountConfirmController" => "App\Auth\Infrastructure\Controllers\AccountConfirmController",
+            "App\Auth\Application\UseCase\AccountConfirm" => "App\Auth\Application\UseCase\AccountConfirm",
+            
+            "App\Auth\Domain\Repository\UserRepositoryInterface" => "App\Auth\Infrastructure\Persistence\UserRepository",            
+            "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository",
             "App\Shared\Application\Port\TransactionManagerInterface" => "App\Shared\Infrastructure\Persistence\TransactionManager",
             "PDO" => function(){ 
                 return new \PDO(
@@ -24,8 +31,6 @@ final class ContainerConfig {
                     getenv('DB_PASSWORD')
                 );
             },
-            "App\Auth\Application\UseCase\RegisterUser" => "App\Auth\Application\UseCase\RegisterUser",
-            "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
             "App\Shared\Application\Port\MailerInterface" => function(){
                 return new \App\Shared\Infrastructure\Mailer\SmtpMailer(
                     getenv("SMTP_HOST"),
@@ -34,8 +39,6 @@ final class ContainerConfig {
                     (int) getenv("SMTP_PORT"),
                 );
             },
-            "App\Auth\Infrastructure\EventListener\SendEmailConfirmation" => "App\Auth\Infrastructure\EventListener\SendEmailConfirmation",
-            "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository"
         ];
 
         foreach($classToInstance as $key => $value){

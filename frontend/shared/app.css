@@ -54,6 +54,11 @@ body {
     text-align: left;
     padding-block: 2rem;
     width: 100%;
+    font-size: 4rem;
+}
+
+.hidden {
+    display: none !important;
 }
 
 /* element input to forms */
@@ -103,6 +108,7 @@ input.error {
     transition: transform, background;
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
+    text-transform: uppercase;
 }
 
 .btn:hover {

@@ -27,6 +27,18 @@
     padding-block: 1rem;
 }
 
+.form__links{
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    width: 100%;
+}
+
+.form__links--link {
+    text-align: center;
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
 /* Tablet (768px+) */
 @media (min-width: 768px) {
     .form {
