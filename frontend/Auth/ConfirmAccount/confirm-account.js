@@ -18,7 +18,7 @@ async function handleConfirmAccount() {
 
     if(!allParams.confirmation){
         spinner.remove();
-        confirmMsg.innerText = "No se econtró el token de confirmación.";
+        confirmMsg.innerText = "No se encontró el token de confirmación.";
         return;
     }
     const response  = await fetchAPI(`/auth/confirm?confirmation=${allParams.confirmation}`,null,'GET');

@@ -61,6 +61,43 @@ body {
     display: none !important;
 }
 
+/*form*/
+.form {
+    background-color: var(--secondary-bg);
+    padding-inline: 1.5rem;
+    padding-block: 2rem;
+    border-radius: .5rem;
+    border: 1.5px solid #ffffff88;
+    color: var(--secondary-color);
+}
+
+.form,
+.form__campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__campo {
+    padding-block: 1.2rem;
+}
+
+.form__campo--label {
+    padding-inline: 1.6rem;
+    padding-block: 1rem;
+}
+
+.form__links{
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    width: 100%;
+}
+
+.form__links--link {
+    text-align: center;
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
 /* element input to forms */
 input {
     outline: 0;
@@ -180,6 +217,7 @@ input.error {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
