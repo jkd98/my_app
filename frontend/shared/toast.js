@@ -3,7 +3,7 @@ let currentTimeOut = null;
 export function toast(ms, type, msg) {
     let body = window.document.getElementsByTagName('body');
     let msgToRender = msg ?? "Hola, soy un mensaje para dar retroalimentacion al cliente";
-
+    let toastDuration = ms ?? 3000;
     let toast = window.document.createElement('div');
     let toastParaph = window.document.createElement('p');
     toastParaph.innerText = msgToRender;
@@ -39,5 +39,5 @@ export function toast(ms, type, msg) {
     body[0].appendChild(toast);
     currentTimeOut = setTimeout(() => {
         body[0].removeChild(toast);
-    }, ms);
+    }, toastDuration);
 }
