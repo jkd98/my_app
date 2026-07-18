@@ -64,7 +64,7 @@ body {
 /*form*/
 .form {
     background-color: var(--secondary-bg);
-    padding-inline: 1.5rem;
+    padding-inline: 2rem;
     padding-block: 2rem;
     border-radius: .5rem;
     border: 1.5px solid #ffffff88;
@@ -96,6 +96,12 @@ body {
     text-align: center;
     text-decoration: none;
     color: var(--secondary-color);
+    padding-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.form__links--link:last-of-type{
+    padding-bottom: 0;
 }
 
 /* element input to forms */

@@ -11,6 +11,7 @@
 
 <body>
     <main class="main flex-center">
+        <div class="spinner" id="spinner"></div>
         <form class="form" id="form">
             <h1 class="heading">Inicia sesión en <strong>JKApp</strong></h1>
             
@@ -29,9 +30,14 @@
             <div class="form__campo">
                 <button class="btn form__btn--primary" id="register-btn">Iniciar Sesión</button>
             </div>
+
+            <div class="form__links flex-center">
+                <a href="../Register/register.html" class="form__links--link">¿No tienes una cuenta? <strong>Registrate</strong></a>
+                <a href="../Register/register.html" class="form__links--link">¿Olvidate tu contraseña? <strong>Recupera tu cuenta</strong></a>
+            </div>
         </form>
     </main>
-    <script src="register.js" type="module" ></script>
+    <script src="login.js" type="module" ></script>
 </body>
 
 </html>
