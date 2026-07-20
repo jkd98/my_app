@@ -15,6 +15,7 @@ CORSMiddleware::handle();
 
 $dispatcher = $container->get("App\Shared\Application\Port\EventDispatcherInterface");
 $dispatcher->addListener("App\Auth\Domain\Events\UserRegistered",$container->get("App\Auth\Infrastructure\EventListener\SendEmailConfirmation"));
+$dispatcher->addListener("App\Auth\Domain\Events\PasswordRecoveryRequested",$container->get("App\Auth\Infrastructure\EventListener\SendPasswordRecoveryEmail"));
 
 $request_method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'];
