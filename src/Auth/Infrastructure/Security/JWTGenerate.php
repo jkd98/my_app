@@ -13,13 +13,14 @@ final class JWTGenerate implements TokenGeneratorInterface {
     ){}
 
     public function generate(UserId $userId):string {
+        error_log("[JWT_SECRET_WORD]: ".$this->privateKey);
         $now = new DateTimeImmutable();
         $exp = $now->modify("+15 minutes");
         $payload = [
             "sub"=>$userId->value(),
             "exp"=>$exp->getTimestamp()
         ];
-        $token = JWT::encode($payload, $this->privateKey, 'RS256');
+        $token = JWT::encode($payload, file_get_contents($this->privateKey), 'RS256');
         return $token;
     }
 }

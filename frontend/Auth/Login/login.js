@@ -60,6 +60,7 @@ function handleSubmit() {
         }
         form.classList.remove('hidden');
         spinner.classList.add('hidden');
+        console.log(response);
     })
 }
 

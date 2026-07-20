@@ -9,6 +9,8 @@ final class ContainerConfig {
 
     public static function create():Container{
         $container = new Container();
+        $config = require(__DIR__ . '/../../../../config/auth.php');
+        $privateKeyPath = $config['jwt']['private_key_path'];
 
         $classToInstance = [
             "App\Auth\Infrastructure\Controllers\RegisterController" => "App\Auth\Infrastructure\Controllers\RegisterController",
@@ -38,7 +40,7 @@ final class ContainerConfig {
             "App\Auth\Infrastructure\Controllers\ResetPasswordController" => "App\Auth\Infrastructure\Controllers\ResetPasswordController",
             "App\Auth\Application\UseCase\ResetPassword" => "App\Auth\Application\UseCase\ResetPassword",
             
-            "App\Auth\Application\Security\TokenGeneratorInterface" => "App\Auth\Infrastructure\Security\JWTGenerate",
+            
             "App\Auth\Domain\Repository\RefreshTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\RefreshTokenRepository",
             "App\Auth\Domain\Repository\UserRepositoryInterface" => "App\Auth\Infrastructure\Persistence\UserRepository",            
             "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository",
@@ -60,6 +62,11 @@ final class ContainerConfig {
                     (int) getenv("SMTP_PORT"),
                 );
             },
+            "App\Auth\Application\Security\TokenGeneratorInterface" => function() use($privateKeyPath) {
+                return new \App\Auth\Infrastructure\Security\JWTGenerate(
+                    $privateKeyPath
+                );
+            }
         ];
 
         foreach($classToInstance as $key => $value){

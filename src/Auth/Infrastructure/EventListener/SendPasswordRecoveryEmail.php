@@ -15,7 +15,7 @@ final class SendPasswordRecoveryEmail implements EventListenerInterface {
         private readonly MailerInterface $mailer
     ) {}
 
-    public function handle(DomainEventInterface $event) {
+    public function handle(DomainEventInterface $event): void {
         if(!$event instanceof PasswordRecoveryRequested) return;
 
         $body =<<<HTML
