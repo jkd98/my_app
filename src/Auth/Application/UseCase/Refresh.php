@@ -39,7 +39,7 @@ final class Refresh {
                     "expires" => time() + (7*24*60*60),
                     "httpOnly" => true,
                     "secure" => true,
-                    "sameSite" => "Strict"
+                    "sameSite" => "Lax"
                 ]
             );
             $this->transactionManager->commit();

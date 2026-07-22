@@ -13,7 +13,7 @@ final class CookieManager implements CookieManagerInterface {
             "expires" => time() - (50*24*60*60),
             "httpOnly" => true,
             "secure" => true,
-            "sameSite" => "Strict"
+            "sameSite" => "Lax"
         ]);
     }
 }
