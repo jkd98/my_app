@@ -20,8 +20,7 @@ final class RefreshController {
             $response = new Response(
                 msg: "Sesión actualizada",
                 data: [
-                    "accessToken" => $loginResponse->accessToken(),
-                    "refreshToken" => $loginResponse->refreshToken()
+                    "accessToken" => $loginResponse->accessToken()
                 ]
             );
             $response->send(200);

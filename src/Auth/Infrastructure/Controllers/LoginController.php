@@ -24,8 +24,7 @@ final class LoginController {
             $response = new Response(
                 msg: "Inicio de sessión exitoso",
                 data: [
-                    "accessToken" => $loginResponseDTO->accessToken(),
-                    "refreshToken" => $loginResponseDTO->refreshToken()
+                    "accessToken" => $loginResponseDTO->accessToken()
                 ]
             );
             $response->send(200);
