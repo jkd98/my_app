@@ -3,7 +3,7 @@ CREATE TABLE refresh_tokens(
     tokenValue CHAR(64) NOT NULL,
     refreshTokenExpiration TIMESTAMP NOT NULL,
     userId CHAR(36) NOT NULL,
-    userAgent VARCHAR(200) NOT NULL,
+    userAgent VARCHAR(500) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT PK_refresh_tokens PRIMARY KEY (tokenId),
