@@ -40,7 +40,7 @@ final class ContainerConfig {
             "App\Auth\Infrastructure\Controllers\ResetPasswordController" => "App\Auth\Infrastructure\Controllers\ResetPasswordController",
             "App\Auth\Application\UseCase\ResetPassword" => "App\Auth\Application\UseCase\ResetPassword",
             
-            
+            "App\Shared\Application\Port\CookieManagerInterface" => "App\Shared\Infrastructure\Http\CookieManager",
             "App\Auth\Domain\Repository\RefreshTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\RefreshTokenRepository",
             "App\Auth\Domain\Repository\UserRepositoryInterface" => "App\Auth\Infrastructure\Persistence\UserRepository",            
             "App\Auth\Domain\Repository\VerificationTokenRepositoryInterface" => "App\Auth\Infrastructure\Persistence\VerificationTokenRepository",
