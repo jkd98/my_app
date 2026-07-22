@@ -9,6 +9,11 @@ final class CookieManager implements CookieManagerInterface {
     }
 
     public function delete(string $key):void{
-        unset($_COOKIE[$key]);
+        setcookie($key,"",[
+            "expires" => time() - (50*24*60*60),
+            "httpOnly" => true,
+            "secure" => true,
+            "sameSite" => "Strict"
+        ]);
     }
 }

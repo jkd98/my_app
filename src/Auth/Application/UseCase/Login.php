@@ -13,6 +13,8 @@ use App\Auth\Domain\Repository\RefreshTokenRepositoryInterface;
 use App\Auth\Domain\Exception\InvalidCredentialsException;
 use App\Auth\Domain\Entity\RefreshToken;
 use App\Shared\Application\Port\TransactionManagerInterface;
+use App\Shared\Application\Port\CookieManagerInterface;
+
 
 final class Login {
     public function __construct(
@@ -20,7 +22,8 @@ final class Login {
         private readonly PasswordHashInterface $passwordHash,
         private readonly TokenGeneratorInterface $tokenGenerator,
         private readonly RefreshTokenRepositoryInterface $refreshTokenRepository,
-        private readonly TransactionManagerInterface $transactionManager
+        private readonly TransactionManagerInterface $transactionManager,
+        private readonly CookieManagerInterface $cookieManager
     ){}
 
     public function login(LoginRequestDTO $data): LoginResponseDTO {
@@ -43,6 +46,16 @@ final class Login {
             );
             // Persistir el refresh token
             $this->refreshTokenRepository->save($refreshToken);
+            $this->cookieManager->set(
+                'refreshTokenJKApp',
+                $refreshToken->tokenValue()->value(),
+                [
+                    "expires" => time() + (7*24*60*60),
+                    "httpOnly" => true,
+                    "secure" => true,
+                    "sameSite" => "Strict"
+                ]
+            );
             $this->transactionManager->commit();
         } catch (\Throwable $th) {
             $this->transactionManager->rollback();
@@ -60,6 +73,6 @@ final class Login {
         };
 
         // Retornar el DTO
-        return new LoginResponseDTO($accessToken,$refreshToken->tokenValue()->value());
+        return new LoginResponseDTO($accessToken);
     }
 }
