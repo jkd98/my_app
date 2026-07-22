@@ -9,13 +9,15 @@ use App\Auth\Application\Security\TokenGeneratorInterface;
 use App\Auth\Domain\Repository\RefreshTokenRepositoryInterface;
 use App\Shared\Application\Port\TransactionManagerInterface;
 use App\Auth\Application\DTO\LoginResponseDTO;
+use App\Shared\Application\Port\CookieManagerInterface;
 
 
 final class Refresh {
     public function __construct(
         private readonly RefreshTokenRepositoryInterface $refreshTokenRepository,
         private readonly TokenGeneratorInterface $tokenGenerator,
-        private readonly TransactionManagerInterface $transactionManager
+        private readonly TransactionManagerInterface $transactionManager,
+        private readonly CookieManagerInterface $cookieManager
     ) {}
 
     public function refresh(string $strRefresTokenValue,string $userAgent): LoginResponseDTO {
@@ -30,12 +32,22 @@ final class Refresh {
         try {
             $this->refreshTokenRepository->save($nwRefreshToken);
             $this->refreshTokenRepository->delete($oldRefreshToken->tokenId());
+            $this->cookieManager->set(
+                'refreshTokenJKApp',
+                $nwRefreshToken->tokenValue()->value(),
+                [
+                    "expires" => time() + (7*24*60*60),
+                    "httpOnly" => true,
+                    "secure" => true,
+                    "sameSite" => "Strict"
+                ]
+            );
             $this->transactionManager->commit();
         } catch (\Throwable $th) {
             $this->transactionManager->rollback();
             throw $th;
         }
 
-        return new LoginResponseDTO($nwAccessToken,$nwRefreshToken->tokenValue()->value());
+        return new LoginResponseDTO($nwAccessToken);
     }
 }
